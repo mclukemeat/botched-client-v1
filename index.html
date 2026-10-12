@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171717">
+    <title>Minecraft 1.12.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <iframe class="game-frame" id="game-frame" title="Eaglercraft 1.12.2" tabindex="0" allow="fullscreen; gamepad"></iframe>
+    <main class="game-loader" id="game-loader" aria-live="polite">
+      <div class="loader-panel">
+        <span class="loader-kicker">OFFLINE CLIENT</span>
+        <h1>Eaglercraft <span>1.12.2</span></h1>
+        <div class="loader-track"><span></span></div>
+        <p id="game-status">Downloading the offline client...</p>
+        <button class="quiet-button hidden" id="retry-load" type="button">RETRY DOWNLOAD</button>
+        <small>Wrapper updated 2026-10-12. The original game archive is unchanged.</small>
+      </div>
+    </main>
+    <header class="topbar">
+      <div class="connection"><span class="signal-dot"></span><span>MODULE MENU</span><span class="divider"></span><span>1.12.2</span></div>
+      <div class="top-actions"><div class="performance"><span>FPS <b>240</b></span><span>PING <b>24</b></span></div><button class="icon-button" id="menu-toggle" type="button" title="Toggle menu (Right Shift)">RSHIFT</button></div>
+    </header>
+    <main class="client-shell" id="client-shell">
+      <aside class="rail">
+        <div class="rail-label">CLIENT</div>
+        <nav class="primary-nav" aria-label="Client pages">
+          <button class="nav-item active" data-page="modules" type="button"><span class="nav-glyph">M</span><span>Modules</span><span class="nav-count" id="enabled-count">00</span></button>
+          <button class="nav-item" data-page="hud" type="button"><span class="nav-glyph">H</span><span>HUD editor</span></button>
+          <button class="nav-item" data-page="settings" type="button"><span class="nav-glyph">S</span><span>Settings</span></button>
+        </nav>
+        <div class="rail-rule"></div><div class="rail-label">CATEGORIES</div>
+        <nav class="category-nav" id="category-nav" aria-label="Module categories"></nav>
+      </aside>
+      <section class="workspace" aria-live="polite">
+        <div class="page-heading">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span><span id="page-kicker">CLIENT / MODULES</span></div><h1 id="page-title">Modules<span class="heading-period">.</span></h1><p id="page-subtitle">Tune your setup. Keep the parts that feel like you.</p></div>
+          <div class="heading-actions" id="heading-actions"><button class="quiet-button" id="reset-filter" type="button">RESET FILTER</button><button class="accent-button" id="export-config" type="button"><span aria-hidden="true">+</span> EXPORT CONFIG</button></div>
+        </div>
+        <section class="modules-page page-content" id="modules-page">
+          <div class="module-toolbar"><div class="search-wrap"><span class="search-symbol" aria-hidden="true"></span><input id="module-search" type="search" placeholder="Find a module..." autocomplete="off"><kbd>/</kbd></div><div class="sort-control"><span>SHOW</span><button id="show-filter" type="button">ALL MODULES <span aria-hidden="true">v</span></button></div><span class="module-total" id="module-total">00 MODULES</span></div>
+          <div class="module-layout"><div class="module-grid" id="module-grid"></div><aside class="detail-panel" id="detail-panel" aria-label="Selected module details"></aside></div>
+        </section>
+        <section class="hud-page page-content hidden" id="hud-page">
+          <div class="hud-editor-grid">
+            <div class="hud-controls-panel"><div class="panel-topline"><span>VISIBLE WIDGETS</span><span id="widget-count">00</span></div><div class="widget-list" id="widget-list"></div><button class="wide-quiet-button" id="reset-hud" type="button">RESET HUD LAYOUT</button></div>
+          </div>
+        </section>
+        <section class="settings-page page-content hidden" id="settings-page"><div class="settings-column">
+          <section class="settings-section"><div class="section-heading"><div><span class="eyebrow">APPEARANCE</span><h2>Make it yours</h2></div><span class="section-index">01</span></div><div class="setting-row"><div class="setting-copy"><strong>Accent color</strong><small>Used for focus, highlights, and active modules.</small></div><div class="swatches" id="swatches" role="group" aria-label="Accent color"></div></div><div class="setting-row"><div class="setting-copy"><strong>Interface scale</strong><small>Adjust the size of the client menu.</small></div><div class="range-control"><input id="scale-range" type="range" min="100" max="125" value="110"><output id="scale-value">110%</output></div></div></section>
+          <section class="settings-section"><div class="section-heading"><div><span class="eyebrow">CONTROLS</span><h2>Quick access</h2></div><span class="section-index">02</span></div><div class="setting-row"><div class="setting-copy"><strong>Open module menu</strong><small>Change the key used to open or close this menu.</small></div><button class="key-button" id="menu-key" type="button">RIGHT SHIFT</button></div><div class="setting-row"><div class="setting-copy"><strong>Interface sounds</strong><small>Soft feedback when switching modules.</small></div><button class="switch" id="sound-switch" type="button" role="switch" aria-checked="true" aria-label="Interface sounds"><span></span></button></div></section>
+          <section class="settings-section reset-section"><div class="setting-copy"><strong>Start fresh</strong><small>Restore the original module and appearance settings.</small></div><button class="quiet-button" id="restore-defaults" type="button">RESTORE DEFAULTS</button></section>
+        </div></section>
+        <footer class="workspace-footer"><span><span class="footer-dot"></span> ALL CHANGES SAVED LOCALLY</span><span>1.12.2</span></footer>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="key-capture hidden" id="key-capture" role="dialog" aria-modal="true" aria-labelledby="capture-title"><div class="capture-box"><span class="eyebrow">CONTROLS</span><h2 id="capture-title">Press a key</h2><p>Choose a new key to open the module menu.</p><button class="quiet-button" id="cancel-capture" type="button">CANCEL</button></div></div>
+  </body>
+</html>
